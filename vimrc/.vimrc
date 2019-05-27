@@ -1,15 +1,4 @@
-" Specify a directory for plugins
-" - For Neovim: ~/.local/share/nvim/plugged
-" - Avoid using standard Vim directory names like 'plugin'
-"call plug#begin('~/.vim/plugged')
-
-"Plug 'ntk148v/vim-horizon'
-
-" Initialize plugin system
-"call plug#end()
-
 " setup Vundle (run :PluginInstall to install plugins)
-filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -17,23 +6,15 @@ call vundle#begin()
 " and to open files and directories.
 Plugin 'scrooloose/nerdtree.git'
 
-" enable linuxsty - Linux Kernel Coding Style
-Plugin 'vivien/vim-addon-linux-coding-style'
-
 Plugin 'ntk148v/vim-horizon'
 
 " end of Vundle initialization
 call vundle#end()
-filetype plugin indent on
-filetype on
-
 
 autocmd vimenter * NERDTree
 colorscheme horizon
 set number relativenumber
 set nu rnu
-execute pathogen#infect()
-call pathogen#helptags()
 autocmd! VimEnter * NERDTree | wincmd w
 " close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -59,19 +40,29 @@ function! MyPrev()
     endif
 endfunction
 
+" set UTF-8 encoding
+set enc=utf-8
+set fenc=utf-8
+set termencoding=utf-8
+" disable vi compatibility (emulation of old bugs)
+set nocompatible
 " use indentation of previous line
 set autoindent
-
 " use intelligent indentation for C
 set smartindent
-
 " configure tabwidth and insert spaces instead of tabs
 set tabstop=4        " tab width is 4 spaces
 set shiftwidth=4     " indent also with 4 spaces
 set expandtab        " expand tabs to spaces
-
 " turn syntax highlighting on
+set t_Co=256
 syntax on
+" colorscheme wombat256
+" highlight matching braces
+set showmatch
+" intelligent comments
+set comments=sl:/*,mb:\ *,elx:\ */
+
 
 " enhanced tab completion on commands
 " set wildmenu
