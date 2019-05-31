@@ -11,10 +11,9 @@ Plugin 'ntk148v/vim-horizon'
 " end of Vundle initialization
 call vundle#end()
 
+" Open a NERDTree automatically when vim starts up
 autocmd vimenter * NERDTree
-colorscheme horizon
-set number relativenumber
-set nu rnu
+" When open change the focus to the file (and not the NERDTree)
 autocmd! VimEnter * NERDTree | wincmd w
 " close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -40,6 +39,10 @@ function! MyPrev()
     endif
 endfunction
 
+colorscheme horizon
+set number relativenumber
+set nu rnu
+
 " set UTF-8 encoding
 set enc=utf-8
 set fenc=utf-8
@@ -57,7 +60,6 @@ set expandtab        " expand tabs to spaces
 " turn syntax highlighting on
 set t_Co=256
 syntax on
-" colorscheme wombat256
 " highlight matching braces
 set showmatch
 " intelligent comments
