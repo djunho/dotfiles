@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cp .vimrc $HOME/
+cp vimrc $HOME/.vimrc
 
 if [ -z "$1" ];  then
 
