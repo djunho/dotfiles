@@ -11,7 +11,8 @@ if [ -z "$1" ];  then
         git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
     fi
 
-    vim -c 'PluginInistall' -c 'qa!'
+    sudo apt-get install ctags
+    vim -c 'PluginInstall' -c 'qa!'
 
 else
     if [ "$1" == "--vimrc" ]; then

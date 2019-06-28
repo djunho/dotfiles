@@ -8,6 +8,8 @@ Plugin 'scrooloose/nerdtree.git'
 
 Plugin 'ntk148v/vim-horizon'
 
+Plugin 'majutsushi/tagbar'
+
 " end of Vundle initialization
 call vundle#end()
 
@@ -76,9 +78,19 @@ set incsearch    " incremental searching
 set ignorecase   " searches are case insensitive...
 set smartcase    " ... unless they contain at least one capital letter
 
+" CTAGS
+set tags=tags
 
 " MAPPINGS
 
+" (F5) Build tags of your own project
+nnoremap <F5> <ESC>:!ctags -R --extra=+fq --c-kinds=+px --fields=+iaS .<cr><cr>
+
+" (F8) Open the Tagbar
+nmap <F8> :TagbarToggle<CR>
+
+map <C-Right> <ESC>:tabnext<CR>
+map <C-Left> <ESC>:tabprev<CR>
 nnoremap L <ESC>:call MyNext()<CR>
 nnoremap H <ESC>:call MyPrev()<CR>
 
