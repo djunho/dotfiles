@@ -66,6 +66,8 @@ syntax on
 set showmatch
 " intelligent comments
 set comments=sl:/*,mb:\ *,elx:\ */
+" Enables the mouse wheel and the use in visual mode
+set mouse=a
 
 
 " enhanced tab completion on commands
