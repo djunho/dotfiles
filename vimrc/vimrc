@@ -69,6 +69,15 @@ set comments=sl:/*,mb:\ *,elx:\ */
 " Enables the mouse wheel and the use in visual mode
 set mouse=a
 
+" Fix the ctrl + arrow key problem in tmux
+if &term =~ '^screen'
+    " tmux will send xterm-style keys when its xterm-keys option is on
+    execute "set <xUp>=\e[1;*A"
+    execute "set <xDown>=\e[1;*B"
+    execute "set <xRight>=\e[1;*C"
+    execute "set <xLeft>=\e[1;*D"
+endif
+
 
 " enhanced tab completion on commands
 " set wildmenu
