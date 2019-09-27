@@ -1,17 +1,19 @@
-" setup Vundle (run :PluginInstall to install plugins)
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" setup vim-plug (run :PlugInstall to install plugins)
+call plug#begin('~/.vim/plugged')
 
 " enable NERD tree - allows you to explore your filesystem
 " and to open files and directories.
-Plugin 'scrooloose/nerdtree.git'
+Plug 'scrooloose/nerdtree'
 
-Plugin 'ntk148v/vim-horizon'
+Plug 'ntk148v/vim-horizon'
 
-Plugin 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 
-" end of Vundle initialization
-call vundle#end()
+" Needs vim8 with python3
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Initialize plugin system
+call plug#end()
 
 " Open a NERDTree automatically when vim starts up
 autocmd vimenter * NERDTree
@@ -20,6 +22,8 @@ autocmd! VimEnter * NERDTree | wincmd w
 " close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
 
 " MyNext() and MyPrev(): Movement between tabs OR buffers
 function! MyNext()

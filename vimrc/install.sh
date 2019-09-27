@@ -6,12 +6,12 @@ if [ -z "$1" ];  then
 
     echo -e "Installing all dependencies"
 
-    if [ ! -d "$HOME/.vim/bundle/Vundle.vim" ]; then
-        echo -e "Installing Vundle plugin manager"
-        git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
+    if [ ! -d "$HOME/.vim/autoload/plug.vim" ]; then
+        echo -e "Installing plugin manager"
+        curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     fi
 
-    sudo apt-get install ctags
+    sudo apt-get install -y ctags npm
     vim -c 'PluginInstall' -c 'qa!'
 
 else
