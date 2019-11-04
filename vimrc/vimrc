@@ -78,7 +78,7 @@ set comments=sl:/*,mb:\ *,elx:\ */
 set mouse=a
 
 set list
-set listchars=eol:~,tab:>.,trail:~,extends:>,precedes:<
+set listchars=tab:>.,trail:~,extends:>,precedes:<
 
 " Fix the ctrl + arrow key problem in tmux
 if &term =~ '^screen'
