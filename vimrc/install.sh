@@ -11,7 +11,7 @@ if [ -z "$1" ];  then
         curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     fi
 
-    sudo apt-get install -y ctags npm
+    sudo apt-get install -y ctags npm cscope
     vim -c 'PluginInstall' -c 'qa!'
 
 else

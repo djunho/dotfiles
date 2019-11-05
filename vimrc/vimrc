@@ -17,6 +17,9 @@ Plug 'majutsushi/tagbar'
 " Needs vim8 with python3
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" Cscope script
+Plug 'joe-skb7/cscope-maps'
+
 " Initialize plugin system
 call plug#end()
 
@@ -123,7 +126,10 @@ set tags=tags
 " MAPPINGS
 
 " (F5) Build tags of your own project
-nnoremap <F5> <ESC>:!ctags -R --extra=+fq --c-kinds=+px --fields=+iaS .<cr><cr>
+nnoremap <F5> <ESC>:!ctags -R --extra=+fq --c-kinds=+px --fields=+iaS .<CR><CR>
+         \:!find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.h' -o -iname '*.hpp' > cscope.files<CR>
+         \:!cscope -b -i cscope.files -f cscope.out<CR>
+         \:cs reset<CR>
 
 " (F8) Open the Tagbar
 nmap <F8> :TagbarToggle<CR>
