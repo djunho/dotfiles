@@ -12,7 +12,7 @@ if [ -z "$1" ];  then
     fi
 
     sudo apt-get install -y ctags npm cscope
-    vim -c 'PluginInstall' -c 'qa!'
+    vim -c 'PlugInstall' -c 'qa!'
 
 else
     if [ "$1" == "--vimrc" ]; then
