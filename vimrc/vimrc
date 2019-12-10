@@ -20,6 +20,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Cscope script
 Plug 'joe-skb7/cscope-maps'
 
+" Linux Kernel Coding Style
+Plug 'vivien/vim-linux-coding-style'
+
 " Initialize plugin system
 call plug#end()
 
@@ -145,4 +148,8 @@ nnoremap H <ESC>:call MyPrev()<CR>
 
 " (CTRL-O) open nerd tree
 nnoremap <C-o> <ESC>:NERDTreeToggle<CR>
+
+" Linux Coding Plugin Settings
+let g:linuxsty_patterns = [ "/linux/", "/kernel/" ]
+nnoremap <silent> <F3> :LinuxCodingStyle<CR>
 
