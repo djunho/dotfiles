@@ -96,6 +96,10 @@ set showmatch
 set comments=sl:/*,mb:\ *,elx:\ */
 " Enables the mouse wheel and the use in visual mode
 set mouse=a
+" Enable clipboard copy paste. If it is not working
+" just install gvim (even if you don't use it
+" to install de dependencies
+set clipboard=unnamedplus
 
 set list
 set listchars=tab:>.,trail:~,extends:>,precedes:<
