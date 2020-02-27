@@ -132,6 +132,8 @@ set tags=tags
 
 " MAPPINGS
 
+" Remove all trailing spaces
+nnoremap <silent> <F4> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 " (F5) Build tags of your own project
 nnoremap <F5> <ESC>:!ctags -R --extra=+fq --c-kinds=+px --fields=+iaS .<CR><CR>
          \:!find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.h' -o -iname '*.hpp' > cscope.files<CR>
