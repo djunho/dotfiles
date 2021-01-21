@@ -1,3 +1,4 @@
+#!/bin/bash
 
 if ! [ -x "$(command -v git)" ]; then
     echo "Installing git"
