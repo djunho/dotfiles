@@ -5,6 +5,10 @@ if ! [ -x "$(command -v git)" ]; then
 fi
 
 echo "Configuring git"
+# Editor
+git config --global core.editor "vim"
+
+# Alias
 git config --global alias.co   "checkout"
 git config --global alias.br   "branch"
 git config --global alias.ci   "commit"
