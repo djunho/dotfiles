@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if ! [ -x "$(command -v vim)" ]; then 
+if ! [ -x "$(command -v vim)" ]; then
     echo "Installing vim"
-    sudo apt install vim  
+    sudo apt install vim
 fi
 
 cp vimrc $HOME/.vimrc
@@ -12,9 +12,9 @@ if [ -z "$1" ];  then
     echo -e "Installing all dependencies"
 
     if [ ! -d "$HOME/.vim/autoload/plug.vim" ]; then
-        if ! [ -x "$(command -v curl)" ]; then 
+        if ! [ -x "$(command -v curl)" ]; then
             echo "Installing curl"
-            sudo apt install curl  
+            sudo apt install curl
         fi
         echo -e "Installing plugin manager"
         curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
