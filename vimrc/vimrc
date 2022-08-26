@@ -17,6 +17,10 @@ Plug 'majutsushi/tagbar'
 " Needs vim8 with python3
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" Fuzzy finder
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+
 " Cscope script
 Plug 'joe-skb7/cscope-maps'
 
@@ -131,6 +135,11 @@ set smartcase    " ... unless they contain at least one capital letter
 set tags=tags
 
 " MAPPINGS
+" fzf mappings
+nnoremap <C-p> :GFiles<Cr>
+nnoremap <C-f> :Lines<Cr>
+nnoremap <C-g> :Ag<Cr>
+nnoremap <silent><leader>l :Buffers<CR>
 
 " Remove all trailing spaces
 nnoremap <silent> <F4> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>

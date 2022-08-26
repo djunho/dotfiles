@@ -5,10 +5,22 @@ if ! [ -x "$(command -v vim)" ]; then
     sudo apt install vim
 fi
 
+if ! [ -x "$(command -v fzf)" ]; then
+    echo "Installing fzf"
+    sudo apt install fzf
+fi
+
+if ! [ -x "$(command -v ag)" ]; then
+    sudo apt-get install silversearcher-ag
+fi
+
+if ! [ -x "$(command -v rg)" ]; then
+    sudo apt-get install ripgrep
+fi
+
 cp vimrc $HOME/.vimrc
 
 if [ -z "$1" ];  then
-
     echo -e "Installing all dependencies"
 
     if [ ! -d "$HOME/.vim/autoload/plug.vim" ]; then
@@ -22,7 +34,6 @@ if [ -z "$1" ];  then
 
     sudo apt-get install -y ctags npm cscope
     vim -c 'PlugInstall' -c 'qa!'
-
 else
     if [ "$1" == "--vimrc" ]; then
         echo -e "Copying only the vimrc file."
