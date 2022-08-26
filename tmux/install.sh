@@ -5,7 +5,15 @@ if ! [ -x "$(command -v tmux)" ]; then
     sudo apt install tmux
 fi
 
+if ! [ -x "$(command -v fzf)" ]; then
+    echo "Installing fzf"
+    sudo apt install fzf
+fi
+
 cp tmux.conf $HOME/.tmux.conf
+cp tmux-cht-languages $HOME/.tmux-cht-languages
+cp tmux-cht-command $HOME/.tmux-cht-command
+sudo cp tmux-cht.sh /usr/local/bin/
 
 # Install the tmux plugin manager
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
