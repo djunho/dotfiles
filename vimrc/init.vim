@@ -1,41 +1,29 @@
 set encoding=utf-8
 scriptencoding utf-8
-set term=xterm-256color
 
 " setup vim-plug (run :PlugInstall to install plugins)
-call plug#begin('~/.vim/plugged')
+call plug#begin()
+    " Colorscheme
+    Plug 'dracula/vim', { 'as': 'dracula' }
 
-" enable NERD tree - allows you to explore your filesystem
-" and to open files and directories.
-Plug 'scrooloose/nerdtree'
+    Plug 'majutsushi/tagbar'
 
-" Colorscheme
-Plug 'drewtempelmeyer/palenight.vim'
+    Plug 'kyazdani42/nvim-tree.lua'
 
-Plug 'majutsushi/tagbar'
+    " Needs vim8 with python3
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-" Needs vim8 with python3
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    " Fuzzy finder
+    Plug 'junegunn/fzf'
+    Plug 'junegunn/fzf.vim'
 
-" Fuzzy finder
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
+    " Cscope script
+    Plug 'joe-skb7/cscope-maps'
 
-" Cscope script
-Plug 'joe-skb7/cscope-maps'
-
-" Linux Kernel Coding Style
-Plug 'vivien/vim-linux-coding-style'
-
+    " Linux Kernel Coding Style
+    Plug 'vivien/vim-linux-coding-style'
 " Initialize plugin system
 call plug#end()
-
-" Open a NERDTree automatically when vim starts up
-autocmd vimenter * NERDTree
-" When open change the focus to the file (and not the NERDTree)
-autocmd! VimEnter * NERDTree | wincmd w
-" close vim if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
@@ -62,7 +50,7 @@ endfunction
 
 " Configure the colorscheme
 set background=dark
-colorscheme palenight
+colorscheme dracula
 if (has("nvim"))
   "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -120,7 +108,6 @@ if &term =~ '^screen'
     execute "set <xLeft>=\e[1;*D"
 endif
 
-
 " enhanced tab completion on commands
 " set wildmenu
 " set wildmode=longest:list,full
@@ -158,7 +145,7 @@ nnoremap L <ESC>:call MyNext()<CR>
 nnoremap H <ESC>:call MyPrev()<CR>
 
 " (CTRL-O) open nerd tree
-nnoremap <C-o> <ESC>:NERDTreeToggle<CR>
+nnoremap <C-o> <ESC>:NvimTreeToggle<CR>
 
 " Linux Coding Plugin Settings
 let g:linuxsty_patterns = [ "/linux/", "/kernel/" ]

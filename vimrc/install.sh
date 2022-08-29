@@ -1,42 +1,61 @@
 #!/bin/bash
 
-if ! [ -x "$(command -v vim)" ]; then
-    echo "Installing vim"
-    sudo apt install vim
+check_install(){
+    echo "Checking application $1 (pkg $2)"
+    if ! [ -x "$(command -v $1)" ]; then
+        echo "Installing $1"
+        sudo apt install $2
+    fi
+}
+
+# Remove the previous nvim (if any) and install the updated version
+#sudo apt remove neovim -y
+echo "Checking application nvim (pkg nvim)"
+if ! [ -x "$(command -v nvim)" ]; then
+    sudo add-apt-repository ppa:neovim-ppa/stable
+    sudo apt-get update
+    sudo apt-get install neovim
 fi
 
-if ! [ -x "$(command -v fzf)" ]; then
-    echo "Installing fzf"
-    sudo apt install fzf
+check_install "fzf"    "fzf"
+check_install "ag"     "silversearcher-ag"
+check_install "rg"     "ripgrep"
+check_install "curl"   "curl"
+check_install "npm"    "npm"
+check_install "ctags"  "ctags"
+check_install "cscope" "cscope"
+
+# Install node.js to use the coc vim plugin
+echo "Checking application node (pkg node)"
+if ! [ -x "$(command -v node)" ]; then
+    curl -sL install-node.now.sh | sudo bash
 fi
 
-if ! [ -x "$(command -v ag)" ]; then
-    sudo apt-get install silversearcher-ag
-fi
-
-if ! [ -x "$(command -v rg)" ]; then
-    sudo apt-get install ripgrep
-fi
-
-cp vimrc $HOME/.vimrc
+mkdir -p $HOME/.config/nvim
+cp -i init.vim $HOME/.config/nvim/
+cp -ir after $HOME/.config/nvim/
 
 if [ -z "$1" ];  then
     echo -e "Installing all dependencies"
 
-    if [ ! -d "$HOME/.vim/autoload/plug.vim" ]; then
-        if ! [ -x "$(command -v curl)" ]; then
-            echo "Installing curl"
-            sudo apt install curl
-        fi
+    if [ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim" ]; then
         echo -e "Installing plugin manager"
-        curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+                            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     fi
 
-    sudo apt-get install -y ctags npm cscope
-    vim -c 'PlugInstall' -c 'qa!'
+    nvim -c "PlugInstall" -c "qa"
+
+    nvim -c "echo 'Running some commands in background. Sorry, but it could take a while'" \
+         -c "sleep 3" \
+         -c "CocInstall -sync coc-pyright coc-json coc-cmake coc-docker coc-markmap coc-sh coc-clangd" \
+         -c "CocCommand clangd.install" \
+         -c "qa!"
+
+    echo -e "Installation complete"
 else
-    if [ "$1" == "--vimrc" ]; then
-        echo -e "Copying only the vimrc file."
+    if [[ "$1" == "--vimrc" ]]; then
+        echo -e "Copying only the vim config files."
     else
         echo -e "This script copies the vimrc to the correct place and installs all dependencies if necessary."
         echo -e "\nUsage: $0 [--vimrc]"
