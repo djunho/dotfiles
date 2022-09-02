@@ -20,6 +20,15 @@ call plug#begin()
 
     " Linux Kernel Coding Style
     Plug 'vivien/vim-linux-coding-style'
+
+    " Configure the LSP and some other plugins for code completion
+    " source: https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion
+    " More configs in after/plugin/nvim-lspconfig.lua
+    Plug 'neovim/nvim-lspconfig'    " Collection of configurations for built-in LSP client
+    Plug 'hrsh7th/nvim-cmp'         " Autocompletion plugin
+    Plug 'hrsh7th/cmp-nvim-lsp'     " LSP source for nvim-cmp
+    Plug 'saadparwaiz1/cmp_luasnip' " Snippets source for nvim-cmp
+    Plug 'L3MON4D3/LuaSnip'         " Snippets plugin
 " Initialize plugin system
 call plug#end()
 
@@ -146,8 +155,8 @@ map <C-Left> <ESC>:tabprev<CR>
 nnoremap L <ESC>:call MyNext()<CR>
 nnoremap H <ESC>:call MyPrev()<CR>
 
-" (CTRL-O) open nerd tree
-nnoremap <C-o> <ESC>:NvimTreeToggle<CR>
+" (CTRL-A) open nerd tree
+nnoremap <C-a> <ESC>:NvimTreeToggle<CR>
 
 " Linux Coding Plugin Settings
 let g:linuxsty_patterns = [ "/linux/", "/kernel/" ]

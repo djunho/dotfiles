@@ -24,12 +24,8 @@ check_install "curl"   "curl"
 check_install "npm"    "npm"
 check_install "ctags"  "ctags"
 check_install "cscope" "cscope"
-
-# Install node.js to use the coc vim plugin
-echo "Checking application node (pkg node)"
-if ! [ -x "$(command -v node)" ]; then
-    curl -sL install-node.now.sh | sudo bash
-fi
+# Install clang-12 to use lsp server vim plugin
+check_install "clangd-12" "clangd-12"
 
 mkdir -p $HOME/.config/nvim
 cp -i init.vim $HOME/.config/nvim/
@@ -44,12 +40,9 @@ if [ -z "$1" ];  then
                             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     fi
 
-    nvim -c "PlugInstall" -c "qa"
-
     nvim -c "echo 'Running some commands in background. Sorry, but it could take a while'" \
          -c "sleep 3" \
-         -c "CocInstall -sync coc-pyright coc-json coc-cmake coc-docker coc-markmap coc-sh coc-clangd" \
-         -c "CocCommand clangd.install" \
+         -c "PlugInstall" \
          -c "qa!"
 
     echo -e "Installation complete"
