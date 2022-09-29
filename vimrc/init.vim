@@ -8,10 +8,8 @@ call plug#begin()
 
     Plug 'majutsushi/tagbar'
 
+    Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
     Plug 'kyazdani42/nvim-tree.lua'
-
-    " Needs vim8 with python3
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
     " Fuzzy finder
     Plug 'junegunn/fzf'
@@ -27,6 +25,10 @@ call plug#end()
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
+" disable netrw at the very start of your init.lua (strongly advised)
+let g:loaded = 1
+let g:loaded_netrwPlugin = 1
+
 
 " MyNext() and MyPrev(): Movement between tabs OR buffers
 function! MyNext()

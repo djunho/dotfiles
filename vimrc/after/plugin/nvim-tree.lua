@@ -5,17 +5,6 @@ local list = {
     { key = "-", action = "split" },
   }
 require'nvim-tree'.setup {
-    renderer = {
-        icons = {
-            webdev_colors = false,
-            show = {
-                file = false,
-                folder = false,
-                folder_arrow = true,
-                git = false
-            }
-        }
-    },
     view = {
         adaptive_size = true,
         mappings = {
