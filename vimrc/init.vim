@@ -27,6 +27,7 @@ call plug#begin()
     Plug 'neovim/nvim-lspconfig'    " Collection of configurations for built-in LSP client
     Plug 'hrsh7th/nvim-cmp'         " Autocompletion plugin
     Plug 'hrsh7th/cmp-nvim-lsp'     " LSP source for nvim-cmp
+    Plug 'hrsh7th/cmp-buffer'       " Get suggestion from buffer
     Plug 'saadparwaiz1/cmp_luasnip' " Snippets source for nvim-cmp
     Plug 'L3MON4D3/LuaSnip'         " Snippets plugin
 " Initialize plugin system
