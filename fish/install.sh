@@ -37,3 +37,5 @@ fish -c "fisher install PatrickF1/fzf.fish"
 chsh -s `which fish`
 
 echo "Fish Installed!"
+echo ""
+echo "run \"tide configure\" to configure the command line prompt."
