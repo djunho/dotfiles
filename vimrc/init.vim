@@ -129,6 +129,7 @@ set hlsearch     " highlight matches
 set incsearch    " incremental searching
 set ignorecase   " searches are case insensitive...
 set smartcase    " ... unless they contain at least one capital letter
+au TextYankPost * silent! lua vim.highlight.on_yank {timeout=1000}   " Highlight the yanked text
 
 " CTAGS
 set tags=tags
@@ -139,6 +140,10 @@ nnoremap <C-p> :GFiles<Cr>
 nnoremap <C-f> :Lines<Cr>
 nnoremap <C-g> :Ag<Cr>
 nnoremap <silent><leader>l :Buffers<CR>
+
+" disable highlighting of last search
+" Check :help :map-special-keys
+nmap <C-_> :noh<enter> " Ctrl - /
 
 " Remove all trailing spaces
 nnoremap <silent> <F4> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
