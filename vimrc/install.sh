@@ -24,8 +24,16 @@ check_install "curl"   "curl"
 check_install "npm"    "npm"
 check_install "ctags"  "ctags"
 check_install "cscope" "cscope"
-# Install clang-12 to use lsp server vim plugin
+
+# Install lsp to use lsp server vim plugin
+# Some of the serevr uses node, so install a recent version
+echo "Checking application node (pkg node)"
+if ! [ -x "$(command -v node)" ]; then
+    curl -sL install-node.now.sh | sudo bash
+fi
 check_install "clangd-12" "clangd-12"
+sudo npm i -g pyright bash-language-server
+
 
 mkdir -p $HOME/.config/nvim
 cp -i init.vim $HOME/.config/nvim/
