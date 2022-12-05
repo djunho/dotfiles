@@ -141,6 +141,11 @@ nnoremap <C-f> :Lines<Cr>
 nnoremap <C-g> :Ag<Cr>
 nnoremap <silent><leader>l :Buffers<CR>
 
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+nnoremap n     nzzzv
+nnoremap N     Nzzzv
+
 " disable highlighting of last search
 " Check :help :map-special-keys
 nmap <C-_> :noh<enter> " Ctrl - /
