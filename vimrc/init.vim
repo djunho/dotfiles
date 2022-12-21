@@ -4,9 +4,13 @@ scriptencoding utf-8
 " setup vim-plug (run :PlugInstall to install plugins)
 call plug#begin()
     " Colorscheme
-    Plug 'dracula/vim', { 'as': 'dracula' }
+    Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+    " Plug 'dracula/vim', { 'as': 'dracula' }
 
     Plug 'majutsushi/tagbar'
+
+    " Enable a enhanced line status
+    Plug 'nvim-lualine/lualine.nvim'
 
     Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
     Plug 'kyazdani42/nvim-tree.lua'
@@ -61,8 +65,7 @@ function! MyPrev()
 endfunction
 
 " Configure the colorscheme
-set background=dark
-colorscheme dracula
+colorscheme tokyonight-night
 if (has("nvim"))
   "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
