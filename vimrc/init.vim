@@ -65,6 +65,7 @@ function! MyPrev()
 endfunction
 
 " Configure the colorscheme
+" set background=dark
 colorscheme tokyonight-night
 if (has("nvim"))
   "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
@@ -144,6 +145,10 @@ nnoremap <C-f> :Lines<Cr>
 nnoremap <C-g> :Ag<Cr>
 nnoremap <silent><leader>l :Buffers<CR>
 
+" Change the jump up and down to Alt + left and right
+nnoremap <silent><leader><Left>  <C-O>
+nnoremap <silent><leader><Right> <C-i>
+
 nnoremap <C-d> <C-d>zz
 nnoremap <C-u> <C-u>zz
 nnoremap n     nzzzv
@@ -151,7 +156,10 @@ nnoremap N     Nzzzv
 
 " disable highlighting of last search
 " Check :help :map-special-keys
-nmap <C-_> :noh<enter> " Ctrl - /
+" To find the correct key, enter in insert mode, then  press C-V C-/
+" Ctrl - /
+nmap <C-_> :noh<enter>
+nmap <C-O> :noh<enter>
 
 " Remove all trailing spaces
 nnoremap <silent> <F4> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
