@@ -1,5 +1,8 @@
 #!/bin/bash
 
+SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+cd "$SCRIPTPATH"
+
 if ! [ -x "$(command -v tmux)" ]; then
     echo "Installing tmux"
     sudo apt install tmux
