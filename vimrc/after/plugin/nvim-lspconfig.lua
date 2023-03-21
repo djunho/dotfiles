@@ -43,6 +43,17 @@ local on_attach = function(_, bufnr)
     end, { desc = 'Format current buffer with LSP' })
 end
 
+-- Get the grammarly client_id var
+local grammarly_client_id = os.getenv("GRAMMARLY_CLIENTID")
+if grammarly_client_id == nil then
+    error("\n\n**************************************************\n"..
+    "Using the grammarly default client_id.\n"..
+    "set env var GRAMMARLY_CLIENTID with your clientId\n"..
+    "See more at https://developer.grammarly.com/apps\n"..
+    "**************************************************\n")
+    grammarly_client_id = "client_BaDkMgx4X19X9UxxYRCXZo"
+end
+
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
 --
@@ -56,11 +67,16 @@ local servers = {
         },
         filetypes = {"c", "cpp", "objc", "objcpp"},
     },
-    pyright = {
-        flags = lsp_flags,
-    },
+    pyright = {},
     bashls = {},
-    sumneko_lua = {
+    grammarly = {
+        cmd = { "grammarly-languageserver", "--stdio" },
+        filetypes = { "markdown" },
+        init_options = {
+            clientId = grammarly_client_id,
+        },
+    },
+    lua_ls = {
         Lua = {
             workspace = { checkThirdParty = false },
             telemetry = { enable = false },

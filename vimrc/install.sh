@@ -29,6 +29,13 @@ check_install "fzf"    "fzf"
 check_install "rg"     "ripgrep"
 check_install "curl"   "curl"
 
+# Grammarly LSP needs to use the node 16 to work
+# https://github.com/znck/grammarly/issues/334
+if ! [ -x "$(command -v nvim)" ]; then
+    curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+    sudo apt install nodejs
+fi
+
 # Not need by the currect vimrc, but it is a nice tool
 check_install "ag"     "silversearcher-ag"
 
