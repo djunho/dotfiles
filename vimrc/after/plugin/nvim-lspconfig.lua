@@ -54,6 +54,9 @@ if grammarly_client_id == nil then
     grammarly_client_id = "client_BaDkMgx4X19X9UxxYRCXZo"
 end
 
+-- To enable debug of the LSP servers uncomment the line below
+-- vim.lsp.set_log_level("debug")
+
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
 --
@@ -63,14 +66,14 @@ local servers = {
     -- clangd = {},
     clangd = {
         cmd = {
-            "clangd-12",
+            "clangd", "--background-index"
         },
         filetypes = {"c", "cpp", "objc", "objcpp"},
     },
     pyright = {},
     bashls = {},
     grammarly = {
-        cmd = { "grammarly-languageserver", "--stdio" },
+        cmd = { "grammarly-languageserver", "--stdio", "--help" },
         filetypes = { "markdown" },
         init_options = {
             clientId = grammarly_client_id,
@@ -103,11 +106,15 @@ mason_lspconfig.setup {
 
 mason_lspconfig.setup_handlers {
     function(server_name)
-        require('lspconfig')[server_name].setup {
+        local cfg = {
             capabilities = capabilities,
             on_attach = on_attach,
-            settings = servers[server_name],
         }
+
+        -- Merge the 2 tables
+        for k,v in pairs(servers[server_name]) do cfg[k] = v end
+
+        require('lspconfig')[server_name].setup(cfg)
     end,
 }
 
