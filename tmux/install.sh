@@ -17,6 +17,7 @@ cp tmux.conf $HOME/.tmux.conf
 cp tmux-cht-languages $HOME/.tmux-cht-languages
 cp tmux-cht-command $HOME/.tmux-cht-command
 sudo cp tmux-cht.sh /usr/local/bin/
+sudo chmod +x /usr/local/bin/tmux-cht.sh
 
 # Install the tmux plugin manager
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then

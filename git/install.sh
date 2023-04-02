@@ -41,7 +41,7 @@ git config --global alias.b    "!git for-each-ref --sort='-authordate' --format=
 git config --global alias.sup  "submodule update --init --recursive"
 
 # Configures the delta
-git config --global delta.navigate                      true    # use n and N to move between diff sections
+git config --global core.pager                          delta
 git config --global delta.light                         false   # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
 git config --global delta.line-numbers                  true
 git config --global delta.minus-style                   'syntax "#37222c"'
@@ -55,3 +55,8 @@ git config --global delta.plus-emph-style               'syntax "#2c5a66"'
 git config --global delta.plus-empty-line-marker-style  'syntax "#20303b"'
 git config --global delta.line-numbers-plus-style       '"#399a96"'
 git config --global delta.line-numbers-zero-style       '"#3b4261"'
+
+git config --global interactive.diffFilter              delta --color-only
+git config --global delta.navigate                      true    # use n and N to move between diff sections
+git config --global merge.conflictstyle                 diff3
+git config --global diff.colorMoved                     default

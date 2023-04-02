@@ -43,14 +43,20 @@ cmp.setup {
         ['<C-Down>'] = cmp.mapping.select_next_item(),
         ['<C-d>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-Space>'] = cmp.mapping(function()
+            if (cmp.visible()) then
+                cmp.abort()
+            else
+                cmp.complete()
+            end
+        end, { 'i', 's' }),
         ['<C-e>'] = cmp.mapping.abort(),
         ['<CR>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
         },
         ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
+            if (cmp.visible() and cmp.get_selected_entry() ~= nil) then
                 cmp.select_next_item()
             elseif luasnip.expand_or_jumpable() then
                 luasnip.expand_or_jump()
@@ -97,6 +103,7 @@ cmp.setup {
     },
     window = {
         documentation = cmp.config.window.bordered(),
+        completion = cmp.config.window.bordered(),
     },
     experimental = {
         ghost_text = true,
