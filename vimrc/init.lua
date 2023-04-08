@@ -52,6 +52,8 @@ require('packer').startup(function(use)
         after = 'nvim-treesitter',
     }
 
+    use 'xiyaowong/transparent.nvim' -- Enable transparency
+
     use 'kyazdani42/nvim-web-devicons' -- optional, for file icons
     use 'kyazdani42/nvim-tree.lua'
 

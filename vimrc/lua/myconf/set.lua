@@ -21,6 +21,11 @@ vim.opt.breakindent = true
 -- Set colorscheme
 vim.opt.termguicolors = true
 vim.cmd [[colorscheme tokyonight-storm]]
+require("tokyonight").setup({
+  styles = {
+    sidebars = "transparent", -- style for sidebars, see below
+  },
+})
 
 -- Set completeopt to have a better completion experience
 vim.opt.completeopt = 'menuone,noselect'
