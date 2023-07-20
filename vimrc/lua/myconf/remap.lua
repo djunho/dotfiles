@@ -40,10 +40,13 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 vim.keymap.set("n", "<F2>", [[:set spell!<cr>]])
 vim.keymap.set("i", "<F2>", [[<C-O>:set spell!<cr>]])
 
-vim.keymap.set("n", "<C-Right>", [[:tabnext<CR>]])
-vim.keymap.set("n", "<C-Left>", [[:tabprev<CR>]])
-vim.keymap.set("n", "L", [[:tabprev<CR>]])
-vim.keymap.set("n", "H", [[:tabprev<CR>]])
+vim.keymap.set("n", "<C-Right>", [[:BufferLineCycleNext<CR>]])
+vim.keymap.set("n", "<C-Left>", [[:BufferLineCyclePrev<CR>]])
+vim.keymap.set("n", "<C-S-Right>", [[:BufferLineMoveNext<CR>]])
+vim.keymap.set("n", "<C-S-Left>", [[:BufferLineMovePrev<CR>]])
+vim.keymap.set("n", "L", [[:BufferLineCycleNext<CR>]])
+vim.keymap.set("n", "H", [[:BufferLineCyclePrev<CR>]])
+vim.keymap.set("n", "<leader>x", [[:bdelete<CR>]])
 
 -- (CTRL-A) open tree explorer
 vim.keymap.set("n", "<C-a>", [[:Neotree toggle<CR>]])
@@ -82,6 +85,3 @@ vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
--- Turn the current file to executable
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
-
