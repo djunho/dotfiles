@@ -47,20 +47,49 @@ require('telescope').setup {
         -- Developer configurations: Not meant for general override
         buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
         mappings = {
-            n = { ["q"] = require("telescope.actions").close },
-            i = {
-                ['<C-u>'] = false,
-                ['<C-d>'] = false,
+            n = {
+                ["q"] = require("telescope.actions").close,
+                ["-"] = require("telescope.actions").file_split,
+                ["|"] = require("telescope.actions").file_vsplit,
             },
         },
     },
 }
+
+-- Get the text if selected or the text searched. Otherwise return '' (default behavior)
+local function getText()
+    local text = ''
+    if (string.find("Vv", vim.fn.mode())) then
+        -- visual mode
+        vim.cmd('noau normal! "vy"')
+        text = vim.fn.getreg('v')
+        vim.fn.setreg('v', {})
+
+        text = string.gsub(text, "\n", "")
+        if #text == 0 then
+            text = ''
+        end
+    elseif (vim.v.hlsearch == 1) then
+        -- Normal mode or any other
+        text = vim.fn.getreg("/")
+        text = string.gsub(text, '\\<', '\\b')
+        text = string.gsub(text, '\\>', '\\b')
+    end
+
+    return text
+end
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
 
 -- Configures some keymaps
 local builtin = require('telescope.builtin')
+
+local changeText = function(func)
+    return function()
+            func({ default_text = getText() })
+        end
+end
 
 vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
 
@@ -69,14 +98,14 @@ vim.keymap.set('n', '<C-p>',       builtin.git_files, { desc = '[S]earch [G]it [
 
 vim.keymap.set('n', '<leader>?', builtin.oldfiles, { desc = '[?] Find recently opened files' })
 
-vim.keymap.set('n', '<C-f>',     builtin.current_buffer_fuzzy_find, { desc = '[/] Fuzzily search in current buffer]' })
-vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, { desc = '[/] Fuzzily search in current buffer]' })
+vim.keymap.set({'n', 'v'}, '<C-f>',     changeText(builtin.current_buffer_fuzzy_find), { desc = '[/] Fuzzily search in current buffer]' })
+vim.keymap.set({'n', 'v'}, '<leader>/', changeText(builtin.current_buffer_fuzzy_find), { desc = '[/] Fuzzily search in current buffer]' })
 vim.keymap.set('n', '<leader>sb', builtin.buffers, { desc = '[S]earch in all [B]uffers' })
 
-vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-vim.keymap.set('n', '<C-g>',      builtin.live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set({'n', 'v'}, '<leader>sg', changeText(builtin.live_grep), { desc = '[S]earch by [G]rep' })
+vim.keymap.set({'n', 'v'}, '<C-g>',      changeText(builtin.live_grep), { desc = '[S]earch by [G]rep' })
 
-vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+vim.keymap.set('n', '<leader>sh',builtin.help_tags, { desc = '[S]earch [H]elp' })
 
 vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
 
