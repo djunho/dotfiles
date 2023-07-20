@@ -45,8 +45,8 @@ vim.keymap.set("n", "<C-Left>", [[:tabprev<CR>]])
 vim.keymap.set("n", "L", [[:tabprev<CR>]])
 vim.keymap.set("n", "H", [[:tabprev<CR>]])
 
--- (CTRL-A) open nerd tree
-vim.keymap.set("n", "<C-a>", [[:NvimTreeToggle<CR>]])
+-- (CTRL-A) open tree explorer
+vim.keymap.set("n", "<C-a>", [[:Neotree toggle<CR>]])
 
 -- Remove all trailing spaces
 vim.keymap.set("n", "<F4>", [[:let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>]])

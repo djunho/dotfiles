@@ -1,6 +1,5 @@
--- disable netrw at the very start of your init.lua (strongly advised)
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- Unless you are still migrating, remove the deprecated commands from v1.x
+vim.g.neo_tree_remove_legacy_commands = 1
 
 -- Install packer
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
@@ -54,8 +53,15 @@ require('packer').startup(function(use)
 
     use 'xiyaowong/transparent.nvim' -- Enable transparency
 
-    use 'kyazdani42/nvim-web-devicons' -- optional, for file icons
-    use 'kyazdani42/nvim-tree.lua'
+    use {
+        'nvim-neo-tree/neo-tree.nvim',
+        branch = 'v2.x',
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+            'MunifTanjim/nui.nvim',
+        }
+    }
 
     -- Git related plugins
     use 'tpope/vim-fugitive'
