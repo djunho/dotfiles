@@ -17,11 +17,7 @@ check_install(){
 #sudo apt remove neovim -y
 echo "Checking application nvim (pkg nvim)"
 if ! [ -x "$(command -v nvim)" ]; then
-    sudo apt-get update
-    sudo apt-get install software-properties-common build-essential # Install some dependencies (LSP) and add-apt-repository
-    sudo add-apt-repository ppa:neovim-ppa/stable
-    sudo apt-get update
-    sudo apt-get install neovim
+    sudo snap install --beta nvim --classic
 fi
 
 check_install "git"    "git"        # The actual vimrc uses git to install packer
