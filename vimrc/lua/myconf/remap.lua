@@ -46,7 +46,9 @@ vim.keymap.set("n", "<C-S-Right>", [[:BufferLineMoveNext<CR>]])
 vim.keymap.set("n", "<C-S-Left>", [[:BufferLineMovePrev<CR>]])
 vim.keymap.set("n", "L", [[:BufferLineCycleNext<CR>]])
 vim.keymap.set("n", "H", [[:BufferLineCyclePrev<CR>]])
-vim.keymap.set("n", "<leader>x", [[:bdelete<CR>]])
+-- The next command will get the current buffer id, move to the next "tab" (buffer) and delete the previous buffer.
+-- This is needed because when deleting a buffer with the neo-tree open, the newvim will redraw the windows with just the neo-tree on it. Leaving the work as a sidebar
+vim.keymap.set("n", "<leader>x", [[:lua d=vim.api.nvim_get_current_buf(); require("bufferline").cycle(1); vim.cmd("bdelete! "..d)<CR>]], { silent = true })
 
 -- (CTRL-A) open tree explorer
 vim.keymap.set("n", "<C-a>", [[:Neotree toggle<CR>]])

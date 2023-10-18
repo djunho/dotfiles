@@ -1,6 +1,8 @@
 
 require("bufferline").setup{
     options = {
+        close_command = "lua require(\"bufferline\").cycle(1); vim.cmd(\"bdelete! %d\")",
+        right_mouse_command = "lua require(\"bufferline\").cycle(1); vim.cmd(\"bdelete! %d\")",
         offsets = {
             {
                 filetype = "neo-tree",
