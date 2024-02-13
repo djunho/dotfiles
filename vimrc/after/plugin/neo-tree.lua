@@ -92,12 +92,10 @@ require("neo-tree").setup({
             nowait = true,
         },
         mappings = {
-            ["<space>"] = {
-                    "toggle_node",
-                    nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
-            },
+            ["<C-space>"] = "toggle_node",
             ["<2-LeftMouse>"] = "open",
             ["<cr>"] = "open",
+            ["<space>"] = "open",
             ["<esc>"] = "revert_preview",
             ["P"] = { "toggle_preview", config = { use_float = true } },
             ["l"] = "focus_preview",

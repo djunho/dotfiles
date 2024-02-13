@@ -40,7 +40,9 @@ cmp.setup {
     },
     mapping = cmp.mapping.preset.insert {
         ['<C-Up>'] = cmp.mapping.select_prev_item(),
+        ['<C-k>']  = cmp.mapping.select_prev_item(),
         ['<C-Down>'] = cmp.mapping.select_next_item(),
+        ['<C-j>']  =   cmp.mapping.select_next_item(),
         ['<C-d>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping(function()
@@ -92,8 +94,8 @@ cmp.setup {
     },
     sources = {
         { name = 'nvim_lsp' },
-        { name = 'nvim_lua' },
         { name = 'luasnip' },
+        { name = 'nvim_lua' },
         { name = 'buffer' },
         { name = 'path' },
     },
@@ -110,3 +112,21 @@ cmp.setup {
         native_menu = false,
     },
 }
+
+-- `/` cmdline setup.
+cmp.setup.cmdline('/', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+        { name = 'buffer' }
+    }
+})
+
+-- `:` cmdline setup.
+cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+        { name = 'path' }
+    }, {
+        { name = 'cmdline' }
+    })
+})
