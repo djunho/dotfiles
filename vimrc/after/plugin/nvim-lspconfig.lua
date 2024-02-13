@@ -159,21 +159,22 @@ local function prev_color(prompt_bufnr)
     actions.move_selection_previous(prompt_bufnr)
 end
 
-local opts = {
-    finder = finders.new_oneshot_job(cmd, {}),
-    sorter = sorters.get_generic_fuzzy_sorter({}),
+vim.keymap.set("n", "<leader>lc", function()
+    local opts = {
+        finder = finders.new_oneshot_job(cmd, {}),
+        sorter = sorters.get_generic_fuzzy_sorter({}),
 
-    attach_mappings = function(prompt_bufnr, map)
-        map("i", "<CR>", enter)
-        map("i", "<C-j>", next_color)
-        map("i", "<C-k>", prev_color)
-        map("n", "<CR>", enter)
-        map("n", "<C-j>", next_color)
-        map("n", "<C-k>", prev_color)
-        return true
-    end,
+        attach_mappings = function(prompt_bufnr, map)
+            map("i", "<CR>", enter)
+            map("i", "<C-j>", next_color)
+            map("i", "<C-k>", prev_color)
+            map("n", "<CR>", enter)
+            map("n", "<C-j>", next_color)
+            map("n", "<C-k>", prev_color)
+            return true
+        end,
+    }
 
-}
-
-vim.keymap.set("n", "<leader>lc", function() pickers.new(dropdown, opts):find() end, { desc = "[L]sp [C]onfig" } )
+    pickers.new(dropdown, opts):find()
+end, { desc = "[L]sp [C]onfig" } )
 
