@@ -39,6 +39,8 @@ git config --global alias.lgst "log --graph --pretty=format:'%Cred%h%Creset -%C(
 git config --global alias.lgbr "log --graph --pretty=format:'%Cred%h%Creset -%C(red)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --decorate"
 git config --global alias.b    "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
 git config --global alias.sup  "submodule update --init --recursive"
+git config --global alias.find-merge "!sh -c 'commit=\$0 && branch=\${1:-HEAD} && (git rev-list \$commit..\$branch --ancestry-path | cat -n; git rev-list \$commit..\$branch --first-parent | cat -n) | sort -k2 -s | uniq -f1 -d | sort -n | tail -1 | cut -f2'"
+git config --global alias.show-merge "!sh -c 'merge=\$(git find-merge \$0 \$1) && [ -n \"\$merge\" ] && git show \$merge'"
 
 # Configures the delta
 git config --global core.pager                          delta
