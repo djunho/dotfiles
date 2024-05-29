@@ -51,7 +51,11 @@ require('telescope').setup {
                 ["q"] = require("telescope.actions").close,
                 ["-"] = require("telescope.actions").file_split,
                 ["|"] = require("telescope.actions").file_vsplit,
+                ["<C-k>"] = require("telescope-live-grep-args.actions").quote_prompt(),
             },
+            i = {
+                ["<C-k>"] = require("telescope-live-grep-args.actions").quote_prompt(),
+            }
         },
     },
 }
@@ -81,9 +85,11 @@ end
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
+pcall(require("telescope").load_extension, "live_grep_args")
 
 -- Configures some keymaps
 local builtin = require('telescope.builtin')
+local lga     = require('telescope').extensions.live_grep_args.live_grep_args
 
 local changeText = function(func)
     return function()
@@ -102,8 +108,8 @@ vim.keymap.set({'n', 'v'}, '<C-f>',     changeText(builtin.current_buffer_fuzzy_
 vim.keymap.set({'n', 'v'}, '<leader>/', changeText(builtin.current_buffer_fuzzy_find), { desc = '[/] Fuzzily search in current buffer]' })
 vim.keymap.set('n', '<leader>sb', builtin.buffers, { desc = '[S]earch in all [B]uffers' })
 
-vim.keymap.set({'n', 'v'}, '<leader>sg', changeText(builtin.live_grep), { desc = '[S]earch by [G]rep' })
-vim.keymap.set({'n', 'v'}, '<C-g>',      changeText(builtin.live_grep), { desc = '[S]earch by [G]rep' })
+vim.keymap.set({'n', 'v'}, '<leader>sg', changeText(lga), { desc = '[S]earch by [G]rep' })
+vim.keymap.set({'n', 'v'}, '<C-g>',      changeText(lga), { desc = '[S]earch by [G]rep' })
 
 vim.keymap.set('n', '<leader>sh',builtin.help_tags, { desc = '[S]earch [H]elp' })
 
