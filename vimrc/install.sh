@@ -20,7 +20,7 @@ if ! [ -x "$(command -v nvim)" ]; then
     sudo snap install --beta nvim --classic
 fi
 
-check_install "git"    "git"        # The actual vimrc uses git to install packer
+check_install "git"    "git"        # The actual vimrc uses git to install lazy.nvim
 check_install "fzf"    "fzf"
 check_install "rg"     "ripgrep"
 check_install "curl"   "curl"
