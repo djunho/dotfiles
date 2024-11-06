@@ -99,10 +99,16 @@ end
 
 vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
 
-vim.keymap.set('n', '<leader>sgf', builtin.git_files, { desc = '[S]earch [G]it [F]iles' })
-vim.keymap.set('n', '<C-p>',       builtin.git_files, { desc = '[S]earch [G]it [F]iles' })
+local all_git_files = function ()
+    builtin.git_files({recurse_submodules = true})
+end
+vim.keymap.set('n', '<leader>sgf', all_git_files, { desc = '[S]earch [G]it [F]iles' })
+vim.keymap.set('n', '<C-p>',       all_git_files, { desc = '[S]earch [G]it [F]iles' })
+vim.keymap.set('n', '<leader>ss',  builtin.lsp_document_symbols, { desc = '[S]earch [S]ymbosl' })
+vim.keymap.set('n', '<leader>sws',  builtin.lsp_workspace_symbols, { desc = '[S]earch [W]orkspace [S]ymbols' })
+vim.keymap.set('n', '<leader>sdws',  builtin.lsp_dynamic_workspace_symbols, { desc = '[S]earch [D]ynamically [W]orkspace [S]ymbols' })
 
-vim.keymap.set('n', '<leader>?', builtin.oldfiles, { desc = '[?] Find recently opened files' })
+vim.keymap.set('n', '<leader>of', builtin.oldfiles, { desc = 'Find recently [O]pened [F]iles' })
 
 vim.keymap.set({'n', 'v'}, '<C-f>',     changeText(builtin.current_buffer_fuzzy_find), { desc = '[/] Fuzzily search in current buffer]' })
 vim.keymap.set({'n', 'v'}, '<leader>/', changeText(builtin.current_buffer_fuzzy_find), { desc = '[/] Fuzzily search in current buffer]' })

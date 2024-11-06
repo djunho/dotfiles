@@ -88,4 +88,10 @@ vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
+-- These mappings control the size of splits (height/width)
+vim.keymap.set("n", "<M-,>", "<c-w>5<")
+vim.keymap.set("n", "<M-.>", "<c-w>5>")
+vim.keymap.set("n", "<M-t>", "<C-W>+")
+vim.keymap.set("n", "<M-s>", "<C-W>-")
+
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
