@@ -2,6 +2,12 @@
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 
+local has_words_before = function()
+  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_text(0, line-1, 0, line-1, col, {})[1]:match("^%s*$") == nil
+end
+
 --   פּ ﯟ   some other good icons
 local kind_icons = {
     Text = "",
@@ -58,7 +64,7 @@ cmp.setup {
             select = true,
         },
         ['<Tab>'] = cmp.mapping(function(fallback)
-            if (cmp.visible() and cmp.get_selected_entry() ~= nil) then
+            if (cmp.visible() and has_words_before() and cmp.get_selected_entry() ~= nil) then
                 cmp.select_next_item()
             elseif luasnip.expand_or_jumpable() then
                 luasnip.expand_or_jump()
@@ -77,6 +83,7 @@ cmp.setup {
         end, { 'i', 's' }),
     },
     formatting = {
+        expandable_indicator = true,
         fields = { "kind", "abbr", "menu" },
         format = function(entry, vim_item)
             -- Kind icons

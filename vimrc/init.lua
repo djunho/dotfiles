@@ -25,11 +25,10 @@ require('lazy').setup({
 
             -- Useful status updates for LSP
             'j-hui/fidget.nvim',
-
-            -- Additional lua configuration, makes nvim stuff amazing
-            'folke/neodev.nvim',
         },
     },
+
+    {'mfussenegger/nvim-lint'},
 
     { -- Autocompletion
         'hrsh7th/nvim-cmp',
@@ -76,7 +75,7 @@ require('lazy').setup({
 
     -- Fuzzy Finder (files, lsp, etc)
     { 'nvim-telescope/telescope.nvim', branch = '0.1.x',
-        dependencies = { 
+        dependencies = {
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope-live-grep-args.nvim',
         }
@@ -86,5 +85,6 @@ require('lazy').setup({
     { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 },
 })
 
+require("core.lsp")
 require("myconf.set")
 require("myconf.remap")

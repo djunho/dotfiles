@@ -121,11 +121,10 @@ return {
     s("#ifndef header", fmt([[
         #ifndef {}
         #define {}
-
-        #endif // {}
         {}
+        #endif // {}
     ]], {
-        f(get_filename), f(get_filename), f(get_filename), i(0)
+        f(get_filename), f(get_filename), i(0), f(get_filename)
     })),
     s("//!", parameter_doc_node),
     s("main", fmt([[
