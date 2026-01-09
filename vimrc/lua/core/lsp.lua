@@ -10,7 +10,7 @@ require('mason').setup()
 -- Ensure the servers above are installed
 local mason_lspconfig = require("mason-lspconfig")
 mason_lspconfig.setup {
-    ensure_installed = {"clangd"},
+    ensure_installed = {"clangd", "harper-ls"},
 }
 
 -- LSP settings.
