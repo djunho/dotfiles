@@ -83,6 +83,14 @@ require('lazy').setup({
 
     -- Fuzzy Finder Algorithm which dependencies local dependencies to be built. Only load if `make` is available
     { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 },
+
+    -- Copilot
+    { 'zbirenbaum/copilot.lua', cmd = "Copilot", event = "InsertEnter",},
+    { 'zbirenbaum/copilot-cmp',
+        config = function ()
+            require("copilot_cmp").setup()
+        end
+    },
 })
 
 require("core.lsp")
