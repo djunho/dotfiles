@@ -8,8 +8,16 @@ cd "$SCRIPTPATH"
 check_install(){
     echo "Checking application $1 (pkg $2)"
     if ! [ -x "$(command -v $1)" ]; then
-        echo "Installing $1"
-        sudo apt install $2
+        if command -v apt > /dev/null 2>&1; then
+            echo "Installing $1"
+            sudo apt install $2
+        elif command -v pacman > /dev/null 2>&1; then
+            echo "Installing $1"
+            sudo pacman -Syu $2
+        else
+            echo "No known package manager found. Aborted. Please install $1 it manually"
+            exit 1
+        fi
     fi
 }
 
