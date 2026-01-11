@@ -5,7 +5,15 @@ cd "$SCRIPTPATH"
 
 if ! [ -x "$(command -v git)" ]; then
     echo "Installing git"
-    sudo apt install git
+    if command -v apt > /dev/null 2>&1; then
+        echo "apt package manager"
+        sudo apt install git
+    elif command -v pacman > /dev/null 2>&1; then
+        sudo pacman -Syu git
+    else
+        echo "No known package manager found. Aborted. Please install it manually"
+        exit 1
+    fi
 fi
 
 if ! [ -x "$(command -v delta)" ]; then
