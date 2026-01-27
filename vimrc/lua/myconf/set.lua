@@ -20,22 +20,11 @@ vim.opt.breakindent = true
 
 -- Set colorscheme
 vim.opt.termguicolors = true
-vim.cmd [[colorscheme tokyonight-storm]]
-require("tokyonight").setup({
-  styles = {
-    sidebars = "transparent", -- style for sidebars, see below
-  },
-})
 
 -- Set completeopt to have a better completion experience
 vim.opt.completeopt = 'menuone,noselect'
 
 -- [[ Basic Keymaps ]]
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
 
 vim.opt.nu = true
 vim.opt.relativenumber = true

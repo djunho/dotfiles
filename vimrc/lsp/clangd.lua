@@ -1,5 +1,4 @@
 return {
-
     settings = {
         clangd = {
             cmd = {
