@@ -17,7 +17,7 @@ return {
         quickfile = { enabled = true },
         scope = { enabled = true },
         scroll = {
-            enabled = true,
+            enabled = false,
             animate = { duration = { step = 5, total = 100 }, },
         },
         statuscolumn = { enabled = true },

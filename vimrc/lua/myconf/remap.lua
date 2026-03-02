@@ -27,8 +27,8 @@ vim.keymap.set("n", "<leader><Right>", "<C-i>")
 -- Check :help :map-special-keys
 -- To find the correct key, enter in insert mode, then  press C-V C-/
 -- Ctrl - /
-vim.keymap.set("n", "<C-_>", [[:noh<enter>]])
-vim.keymap.set("n", "<C-O>", [[:noh<enter>]])
+vim.keymap.set("n", "<C-_>", [[:noh<enter>]], {silent = true})
+vim.keymap.set("n", "<C-O>", [[:noh<enter>]], {silent = true})
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
@@ -37,26 +37,26 @@ vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 -- toggle spell checking
-vim.keymap.set("n", "<F2>", [[:set spell!<cr>]])
-vim.keymap.set("i", "<F2>", [[<C-O>:set spell!<cr>]])
+vim.keymap.set("n", "<F2>", [[:set spell!<cr>]], {silent = true})
+vim.keymap.set("i", "<F2>", [[<C-O>:set spell!<cr>]], {silent = true})
 
-vim.keymap.set("n", "<C-Right>", [[:BufferLineCycleNext<CR>]])
-vim.keymap.set("n", "<C-l>",     [[:BufferLineCycleNext<CR>]])
-vim.keymap.set("n", "<C-Left>", [[:BufferLineCyclePrev<CR>]])
-vim.keymap.set("n", "<C-h>",    [[:BufferLineCyclePrev<CR>]])
-vim.keymap.set("n", "<C-S-Right>", [[:BufferLineMoveNext<CR>]])
-vim.keymap.set("n", "<C-S-Left>", [[:BufferLineMovePrev<CR>]])
-vim.keymap.set("n", "L", [[:BufferLineCycleNext<CR>]])
-vim.keymap.set("n", "H", [[:BufferLineCyclePrev<CR>]])
+vim.keymap.set("n", "<C-Right>", [[:BufferLineCycleNext<CR>]], {silent = true})
+vim.keymap.set("n", "<C-l>",     [[:BufferLineCycleNext<CR>]], {silent = true})
+vim.keymap.set("n", "<C-Left>", [[:BufferLineCyclePrev<CR>]], {silent = true})
+vim.keymap.set("n", "<C-h>",    [[:BufferLineCyclePrev<CR>]], {silent = true})
+vim.keymap.set("n", "<C-S-Right>", [[:BufferLineMoveNext<CR>]], {silent = true})
+vim.keymap.set("n", "<C-S-Left>", [[:BufferLineMovePrev<CR>]], {silent = true})
+vim.keymap.set("n", "L", [[:BufferLineCycleNext<CR>]], {silent = true})
+vim.keymap.set("n", "H", [[:BufferLineCyclePrev<CR>]], {silent = true})
 -- The next command will get the current buffer id, move to the next "tab" (buffer) and delete the previous buffer.
 -- This is needed because when deleting a buffer with the neo-tree open, the newvim will redraw the windows with just the neo-tree on it. Leaving the work as a sidebar
 vim.keymap.set("n", "<leader>x", [[:lua d=vim.api.nvim_get_current_buf(); require("bufferline").cycle(1); vim.cmd("bdelete! "..d)<CR>]], { silent = true })
 
 -- (CTRL-A) open tree explorer
-vim.keymap.set("n", "<C-a>", [[:Neotree toggle<CR>]])
+vim.keymap.set("n", "<C-a>", [[:Neotree toggle<CR>]], {silent = true})
 
 -- Remove all trailing spaces
-vim.keymap.set("n", "<F4>", [[:let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>]])
+vim.keymap.set("n", "<F4>", [[:let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>]], {silent = true})
 
 -- When selecting some lines, can move then using "J" or "K"
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
@@ -71,14 +71,14 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 -- greatest remap ever
 -- preserves the buffer when pasting over a highlighted selection
-vim.keymap.set("x", "<leader>p", [["_dP]])
+vim.keymap.set("x", "<leader>p", [["_dP]], {silent = true})
 
 -- next greatest remap ever : asbjornHaland
 -- Yank to the clipboard
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+vim.keymap.set({"n", "v"}, "<leader>y", [["+y]], {silent = true})
+vim.keymap.set("n", "<leader>Y", [["+Y]], {silent = true})
 
-vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
+vim.keymap.set({"n", "v"}, "<leader>d", [["_d]], {silent = true})
 
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
