@@ -23,13 +23,17 @@ return {
             -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
             local capabilities = vim.lsp.protocol.make_client_capabilities()
             capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+            vim.lsp.config('*', { capabilities = capabilities })
+            vim.lsp.document_color.enable(true, nil, { style = 'virtual' })
 
             vim.lsp.enable({
                 "clangd",
                 "lua_ls",
                 "bashls",
                 "pyright",
-                "harper-ls"
+                "harper-ls",
+                "ts_ls",
+                "tailwindcss",
             })
 
         -- LSP settings.

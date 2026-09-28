@@ -3,6 +3,7 @@ vim.lsp.enable({
     "lua_ls",
     "bashls",
     "pyright",
+    "ts_ls",
 })
 
 -- Setup mason so it can manage external tooling
