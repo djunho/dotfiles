@@ -1,0 +1,163 @@
+;; =============================================================================
+;;  kanata.kbd  —  kanata port of the ZMK Corne keymap, for "dumb" keyboards
+;; =============================================================================
+;;
+;;  Source of truth: ~/personal/Corne/config/corne.keymap (ZMK firmware).
+;;  This file replicates the FEATURES (layers, homerow mods, symbol/nav layers,
+;;  bracket combos) on a standard keyboard via kanata running on the host.
+;;
+;;  IMPORTANT scoping: this config is meant to run ONLY on your laptop's built-in
+;;  keyboard and the external SONiX keyboard. The Corne itself already does all
+;;  of this in firmware, so kanata MUST NOT grab it (see linux-dev below). Letting
+;;  two remappers process the same keystrokes would double-process and break it.
+;;
+;;  Validate before running:   kanata --check --cfg kanata.kbd
+;; =============================================================================
+
+
+;; -----------------------------------------------------------------------------
+;;  defcfg — device scoping + global behavior
+;; -----------------------------------------------------------------------------
+(defcfg
+  ;; Whitelist: kanata grabs ONLY these two devices. The Corne ("Corne Keyboard",
+  ;; a Bluetooth device) is never named here, so it is left completely untouched
+  ;; and keeps doing its own ZMK thing. Paths are stable by-path/by-id symlinks
+  ;; (NOT /dev/input/eventN, which get renumbered on reboot/replug).
+  ;; Multiple devices are colon-separated.
+  linux-dev /dev/input/by-path/platform-i8042-serio-0-event-kbd:/dev/input/by-id/usb-SONiX_USB_DEVICE-event-kbd
+
+  ;; Don't crash if the external SONiX keyboard is unplugged.
+  linux-continue-if-no-devs-found yes
+
+  ;; Keys not listed in defsrc pass straight through untouched (number row,
+  ;; function row, arrows, etc. all keep working normally).
+  process-unmapped-keys no
+
+  ;; Lets several tap-hold keys be pending at once (helpful for fast rolls
+  ;; across homerow mods).
+  concurrent-tap-hold yes
+
+  ;; TODO(kanata 1.12): native ZMK require-prior-idle-ms equivalent. The option
+  ;; below does not exist in 1.11.0 (it ships in 1.12). Until then it is emulated
+  ;; by the key-timing switch in the `hrm` deftemplate. On 1.12: uncomment this
+  ;; line AND strip the switch from `hrm`. See README "Prior-idle" section.
+  ;; tap-hold-require-prior-idle 150
+)
+
+
+;; -----------------------------------------------------------------------------
+;;  defvar — tunable timings (milliseconds)
+;; -----------------------------------------------------------------------------
+;;  Mapped from the ZMK hold-tap behaviors hm_l / hm_r:
+;;    ZMK tapping-term-ms 280       -> hr-hold  (how long to hold for the modifier)
+;;    ZMK quick-tap-ms 175          -> hr-tap   (re-press within this = repeat tap)
+;;    ZMK require-prior-idle-ms 150 -> not available in kanata 1.11.0 (see README)
+(defvar
+  tap-time   200    ;; generic tap window (esc/enter/space duals)
+  hold-time  200    ;; generic hold window
+  hr-tap     200    ;; homerow: quick-tap / repeat window
+  hr-hold    250    ;; homerow: hold-for-modifier window
+
+  ;; prior-idle emulation (stand-in for ZMK require-prior-idle-ms until 1.12):
+  idle-ms      150  ;; if the previous key was pressed <this ago -> force a tap
+  idle-recency   1  ;; which recent keypress to measure (1 = the previous key).
+                    ;;   If homerow mods NEVER produce a modifier, bump to 2.
+                    ;;   If fast typing still misfires, raise idle-ms instead.
+)
+
+
+;; -----------------------------------------------------------------------------
+;;  defsrc — the physical keys kanata listens to (US ANSI block)
+;; -----------------------------------------------------------------------------
+(defsrc
+  tab  q    w    e    r    t    y    u    i    o    p    bspc
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  lctl lmet lalt           spc            ralt rctl
+)
+
+
+;; -----------------------------------------------------------------------------
+;;  deftemplate — one home row mod key
+;; -----------------------------------------------------------------------------
+;;  Combines two guards against accidental modifiers while typing:
+;;   1. prior-idle (the switch): if the previous key was pressed < idle-ms ago,
+;;      you're mid-flow, so emit the plain letter and skip the hold entirely.
+;;      This is the stand-in for ZMK's require-prior-idle-ms (no native 1.11.0
+;;      support). See README "Prior-idle" for re-enabling the global option in 1.12.
+;;   2. bilateral (tap-hold-release-keys): otherwise, the hold (modifier) only
+;;      arms when an OPPOSITE-hand key follows; the trailing list is the SAME-hand
+;;      keys that force a tap (the inverse spelling of ZMK hold-trigger-key-positions).
+(deftemplate hrm (key mod samehand)
+  (switch
+    ((key-timing $idle-recency less-than $idle-ms)) $key break
+    () (tap-hold-release-keys $hr-tap $hr-hold $key $mod $samehand) break
+  )
+)
+
+;; -----------------------------------------------------------------------------
+;;  defalias — dual-role keys
+;; -----------------------------------------------------------------------------
+(defalias
+  ;; Home row mods. Mods follow the ZMK assignment: GUI ALT CTRL SHIFT
+  ;; (pinky->index) on the left, mirrored on the right.
+  a    (t! hrm a lmet (q w e r t a s d f g z x c v b))
+  s    (t! hrm s lalt (q w e r t a s     g z x c v b))
+  d    (t! hrm d lctl (q w e r t a   d   g z x c v b))
+  f    (t! hrm f lsft (q w e r t a     f g z x c v b))
+  j    (t! hrm j rsft (y u i o p h j     ; ' n m , . /))
+  k    (t! hrm k rctl (y u i o p h   k   ; ' n m , . /))
+  l    (t! hrm l ralt (y u i o p h     l ; ' n m , . /))
+  scln (t! hrm ; rmet (y u i o p h j k l ; ' n m , . /))
+
+  ;; --- Layer triggers ------------------------------------------------------
+  ;; lower = held Right-Ctrl (nav / numbers).
+  lwr  (layer-while-held lower)
+  fn   (layer-while-held fn)
+
+  ;; --- Other duals --------------------------------------------------------
+  ;; Caps -> tap Esc / hold Ctrl (classic; full keyboards already have Tab+Shift)
+  cap  (tap-hold-press $tap-time $hold-time esc lctl)
+  ;; Enter -> tap Enter / hold Right-Shift   (mirrors ZMK &mt RSHIFT ENTER)
+  ent  (tap-hold-press $tap-time $hold-time ret rsft)
+
+)
+
+
+;; -----------------------------------------------------------------------------
+;;  Layer 0: base  (ZMK default_layer)
+;; -----------------------------------------------------------------------------
+;;  Divergences from the Corne (a full keyboard doesn't need the space-savers):
+;;    - Caps = Esc/Ctrl (Corne crammed Tab/Shift here; you have those already).
+;;    - , . ' / stay literal (Corne mod-tapped them to fit; unneeded here).
+(deflayer base
+  tab  q    w    e    r    t    y    u    i    o    p    bspc
+  @cap @a   @s   @d   @f   g    h    @j   @k   @l   @scln '   @ent
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  lctl lmet lalt           spc            ralt @lwr
+)
+
+
+
+
+;; -----------------------------------------------------------------------------
+;;  Layer 1: lower — nav + numpad  (ZMK lower_layer)   [held Right-Ctrl]
+;; -----------------------------------------------------------------------------
+(deflayer lower
+  _    _    _    _    _    prnt _    1    2    3    0    del
+  _    _    pgup up   pgdn _    _    4    5    6    _    _    _
+  _    home left down rght end  _    7    8    9    _    _
+  _    _    _              _              _    _
+)
+
+
+;; -----------------------------------------------------------------------------
+;;  Layer 2: fn — F-keys  (ZMK fn_layer)
+;; -----------------------------------------------------------------------------
+(deflayer fn
+  _    _    _    _    _    _    _    f1   f2   f3   f10  _
+  _    _    _    _    _    _    _    f4   f5   f6   f11  _    _
+  _    _    _    _    _    _    _    f7   f8   f9   f12  _
+  _    _    _              _              _    _
+)
+

@@ -1,0 +1,19 @@
+[Unit]
+Description=kanata keyboard remapper (Corne port)
+Documentation=https://github.com/jtroo/kanata
+
+[Service]
+# References kanata's standard config dir via the %E specifier — no repo path.
+# install.sh symlinks ~/.config/kanata/kanata.kbd -> the repo's kanata.kbd; for a
+# manual install, create that symlink yourself (see README). This way the unit
+# never changes if the repo moves.
+ExecStart=/usr/bin/kanata --cfg %E/kanata/kanata.kbd
+Restart=on-failure
+RestartSec=2
+# Hardening (kanata only needs the input devices and uinput).
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=true
+
+[Install]
+WantedBy=default.target
